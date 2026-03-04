@@ -4,6 +4,7 @@ Date: 2026-02-05
 Program Details: Battleship
 */
 use rand::Rng;
+use core::num;
 use std::io;
 fn main() {
     // create a vector of strings for the placements of the ships and the guesses
@@ -93,11 +94,13 @@ fn main() {
     ];
     // variables to keep track of the game state
     let mut input = String::new();
+   
     let mut tries = 0;
     let mut win = 0;
     let mut game = true;
     let mut play = false;
-
+    let mut ships = -1;
+let mut num_ships = false;
     // main game loop
     while game {
         println!(
@@ -160,10 +163,36 @@ Enter 2 to exit"
                 ".".to_string(),
                 ".".to_string(),
                 ".".to_string(),
-            ];
+            ];num_ships=true;
+            while num_ships{
+                
+            
+             println!(
+            "Enter 1 for 2 ships
+Enter 2 for 3 ships"
+        );
+         let mut shipps = String::new();
+        io::stdin().read_line(&mut shipps).expect("Failed to read line");
             // generate 2 ship placements
+            
+            if shipps.trim() == "1" {
+                shipgenerator(&mut placements, &mut placements2);
+                shipgenerator(&mut placements, &mut placements2);
+                ships = 4;
+                num_ships=false;
+            }
+            // generate 3 ship placements
+            else if shipps.trim() == "2" {
             shipgenerator(&mut placements, &mut placements2);
             shipgenerator(&mut placements, &mut placements2);
+            shipgenerator(&mut placements, &mut placements2);
+            ships = 6;
+            num_ships=false;
+
+            }
+            else{
+println!("Invalid input");
+            }}
             // draw the map
             println!(" /  1    2    3    4    5");
             draw_map(&mut temp, &mut guesses);
@@ -213,7 +242,7 @@ Enter 2 to exit"
             }
             println!("tries: {}", tries);
             // check if the player has won or lost
-            if tries > 15 {
+            if tries > 30 {
                 println!("You lose! it took you {} tries!", tries);
                 play = false;
             }
@@ -221,17 +250,15 @@ Enter 2 to exit"
                 // if 4 X's are in the guesses vector, the player wins
                 if guesses[i] == "X" {
                     win += 1;
-                   
                 }
-               
             }
-             if win == 4 {
-                    println!("You win! it took you {} tries!", tries);
-                    play = false;
-                } else {
-                    // reset the win counter for the next guess
-                    win = 0;
-                }
+            if win == ships {
+                println!("You win! it took you {} tries!", tries);
+                play = false;
+            } else {
+                // reset the win counter for the next guess
+                win = 0;
+            }
         }
     }
 }
@@ -392,26 +419,31 @@ fn shipgenerator(placements: &mut Vec<String>, placements2: &mut Vec<String>) {
 }
 
 fn draw_map(temp: &mut Vec<String>, guesses: &mut Vec<String>) {
+    // draws the first 5
     for i in 0..5 {
         temp.push(guesses[i].clone());
     }
     println!("A {:?}", temp);
     temp.clear();
+    // draws the next 5
     for i in 5..10 {
         temp.push(guesses[i].clone());
     }
     println!("B {:?}", temp);
     temp.clear();
+    // draws the next 5
     for i in 10..15 {
         temp.push(guesses[i].clone());
     }
     println!("C {:?}", temp);
     temp.clear();
+    // draws the next 5
     for i in 15..20 {
         temp.push(guesses[i].clone());
     }
     println!("D {:?}", temp);
     temp.clear();
+    // draws the next 5
     for i in 20..25 {
         temp.push(guesses[i].clone());
     }
