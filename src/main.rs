@@ -267,16 +267,19 @@ fn shipgenerator(placements: &mut Vec<String>, placements2: &mut Vec<String>) {
     // generate 2 ship placements
     let mut rng = rand::rng();
     let mut dice = rng.random_range(0..placements.len());
+    let mut otherplace = -1;
     // check if the placement is already taken and if it is, generate a new one until it isn't
     while placements[dice] == placements2[dice] {
         dice = rng.random_range(0..placements.len());
     }
     // move the String out of `placements` into `placements2` without borrowing
+    
     placements2[dice] = placements[dice].clone();
     // loops through the first 5 placements and checks if the dice roll is equal to the index, if it is, it generates a random number between 1 and 3 to determine where the other part of the ship will be placed, then it checks if the placement is valid and if it is, it moves the String from `placements` to `placements2` without borrowing
+  while placements2[otherplace]==placements[otherplace]{
     for i in 0..5 {
         if dice == i {
-            let mut otherplace = rng.random_range(1..4);
+             otherplace = rng.random_range(1..4);
             if (i == 1 && otherplace == 1) || (i == 4 && otherplace == 3) {
                 otherplace = rng.random_range(1..3);
                 if otherplace == 1 && i == 1 {
@@ -303,7 +306,7 @@ fn shipgenerator(placements: &mut Vec<String>, placements2: &mut Vec<String>) {
     // loops through the next 5 placements and checks if the dice roll is equal to the index, if it is, it generates a random number between 1 and 4 to determine where the other part of the ship will be placed, then it checks if the placement is valid and if it is, it moves the String from `placements` to `placements2` without borrowing
     for i in 5..10 {
         if dice == i {
-            let mut otherplace = rng.random_range(1..5);
+             otherplace = rng.random_range(1..5);
             if (i == 5 && otherplace == 1) || (i == 9 && otherplace == 3) {
                 otherplace = rng.random_range(1..4);
                 if otherplace == 1 && i == 5 {
@@ -333,7 +336,7 @@ fn shipgenerator(placements: &mut Vec<String>, placements2: &mut Vec<String>) {
     // loops through the next 5 placements and checks if the dice roll is equal to the index, if it is, it generates a random number between 1 and 4 to determine where the other part of the ship will be placed, then it checks if the placement is valid and if it is, it moves the String from `placements` to `placements2` without borrowing
     for i in 10..15 {
         if dice == i {
-            let mut otherplace = rng.random_range(1..4);
+             otherplace = rng.random_range(1..4);
             if (i == 10 && otherplace == 1) || (i == 14 && otherplace == 3) {
                 otherplace = rng.random_range(1..4);
                 if otherplace == 1 && i == 10 {
@@ -363,7 +366,7 @@ fn shipgenerator(placements: &mut Vec<String>, placements2: &mut Vec<String>) {
     // loops through the next 5 placements and checks if the dice roll is equal to the index, if it is, it generates a random number between 1 and 4 to determine where the other part of the ship will be placed, then it checks if the placement is valid and if it is, it moves the String from `placements` to `placements2` without borrowing
     for i in 15..20 {
         if dice == i {
-            let mut otherplace = rng.random_range(1..4);
+             otherplace = rng.random_range(1..4);
             if (i == 15 && otherplace == 1) || (i == 19 && otherplace == 3) {
                 otherplace = rng.random_range(1..4);
                 if otherplace == 1 && i == 15 {
@@ -390,10 +393,11 @@ fn shipgenerator(placements: &mut Vec<String>, placements2: &mut Vec<String>) {
             }
         }
     }
+  }
     // loops through the next 5 placements and checks if the dice roll is equal to the index, if it is, it generates a random number between 1 and 4 to determine where the other part of the ship will be placed, then it checks if the placement is valid and if it is, it moves the String from `placements` to `placements2` without borrowing
     for i in 20..25 {
         if dice == i {
-            let mut otherplace = rng.random_range(1..4);
+             otherplace = rng.random_range(1..4);
             if (i == 20 && otherplace == 1) || (i == 24 && otherplace == 3) {
                 otherplace = rng.random_range(1..3);
                 if otherplace == 1 && i == 20 {
@@ -417,7 +421,6 @@ fn shipgenerator(placements: &mut Vec<String>, placements2: &mut Vec<String>) {
         }
     }
 }
-
 fn draw_map(temp: &mut Vec<String>, guesses: &mut Vec<String>) {
     // draws the first 5
     for i in 0..5 {
